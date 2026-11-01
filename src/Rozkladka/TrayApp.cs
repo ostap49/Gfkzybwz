@@ -15,6 +15,7 @@ internal sealed class TrayApp : ApplicationContext
     private string _shownLayout = "";
     private IntPtr _iconHandle;
     private string? _lastExternalApp;
+    private readonly MessageWindow _messages;
 
     public TrayApp(AppSettings settings, SwitchEngine engine)
     {
@@ -36,6 +37,7 @@ internal sealed class TrayApp : ApplicationContext
             new ToolStripMenuItem("Перечитати налаштування", null, (_, _) => ReloadSettings()),
             new ToolStripSeparator(),
             _startup,
+            new ToolStripMenuItem("Закріпити іконку на панелі завдань…", null, (_, _) => OpenTaskbarSettings()),
             new ToolStripMenuItem("Про програму", null, (_, _) => ShowAbout()),
             new ToolStripMenuItem("Вийти", null, (_, _) => ExitThread()),
         });
@@ -51,10 +53,61 @@ internal sealed class TrayApp : ApplicationContext
             $"«{word}» додано у винятки — більше не змінюватиму це слово.", ToolTipIcon.Info);
         _engine.Switched += RefreshIcon;
 
+        _messages = new MessageWindow(() => ShowWelcome(false, 2, Array.Empty<string>()));
+
         _timer = new System.Windows.Forms.Timer { Interval = 250 };
         _timer.Tick += (_, _) => RefreshIcon();
         _timer.Start();
         RefreshIcon();
+    }
+
+    /// <summary>Підказка після ручного запуску: де шукати іконку і чого бракує.</summary>
+    public void ShowWelcome(bool firstRun, int layoutCount, IReadOnlyList<string> missingDictionaries)
+    {
+        if (layoutCount < 2)
+        {
+            MessageBox.Show("Увімкнено лише одну розкладку клавіатури. Додайте ще одну (наприклад, українську) у Параметрах Windows → Час і мова → Мова та регіон.",
+                "Rozkladka", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        else if (firstRun && missingDictionaries.Count > 0)
+        {
+            MessageBox.Show(
+                "Немає словника перевірки орфографії Windows для: " + string.Join(", ", missingDictionaries) + ".\n\n" +
+                "Rozkladka працюватиме обережніше (лише явні випадки на кшталт ghbdsn). Щоб додати словник, встановіть мовний пакет " +
+                "(Параметри → Час і мова → Мова та регіон → мова → Параметри мови) або покладіть словник Hunspell (.dic + .aff) у\n" +
+                "%AppData%\\Microsoft\\Spelling\\<мова>\\",
+                "Rozkladka", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        _tray.ShowBalloonTip(5000, "Rozkladka працює",
+            "Іконка розкладки — у треї біля годинника. Не бачите? Натисніть стрілку ^ або виберіть у меню «Закріпити іконку».",
+            ToolTipIcon.Info);
+    }
+
+    private void OpenTaskbarSettings()
+    {
+        try { Process.Start(new ProcessStartInfo("ms-settings:taskbar") { UseShellExecute = true }); }
+        catch (Exception ex) { Log.Error("ms-settings:taskbar", ex); }
+        MessageBox.Show("У вікні, що відкрилося: «Інші значки в області сповіщень» (Other system tray icons) → увімкніть Rozkladka.",
+            "Rozkladka", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    /// <summary>Невидиме вікно верхнього рівня: ловить запит від другої копії програми.</summary>
+    private sealed class MessageWindow : NativeWindow
+    {
+        private readonly Action _onShowMe;
+
+        public MessageWindow(Action onShowMe)
+        {
+            _onShowMe = onShowMe;
+            CreateHandle(new CreateParams { Caption = "Rozkladka.Messages" });
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == Program.ShowMeMessage && Program.ShowMeMessage != 0) _onShowMe();
+            base.WndProc(ref m);
+        }
     }
 
     private void Toggle(Action change, bool notify = false)
@@ -172,6 +225,7 @@ internal sealed class TrayApp : ApplicationContext
         if (disposing)
         {
             _timer.Dispose();
+            _messages.DestroyHandle();
             _tray.Visible = false;
             _tray.Dispose();
             _engine.Dispose();

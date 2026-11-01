@@ -60,7 +60,7 @@ internal sealed class AppSettings
         set
         {
             using var key = Registry.CurrentUser.CreateSubKey(RunKey);
-            if (value) key.SetValue("Rozkladka", $"\"{Environment.ProcessPath}\"");
+            if (value) key.SetValue("Rozkladka", $"\"{Environment.ProcessPath}\" --tray");
             else key.DeleteValue("Rozkladka", false);
         }
     }

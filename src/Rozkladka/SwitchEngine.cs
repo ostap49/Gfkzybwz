@@ -131,7 +131,7 @@ internal sealed class SwitchEngine : IDisposable
         }
         catch (Exception ex)
         {
-            Debug.WriteLine(ex);
+            Log.Error("Обробка клавіші", ex);
             ResetWord();
         }
         return suppress ? (IntPtr)1 : Native.CallNextHookEx(_keyboardHook, nCode, wParam, lParam);

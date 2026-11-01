@@ -6,6 +6,10 @@
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <AssemblyName>Rozkladka</AssemblyName>
     <RootNamespace>Rozkladka</RootNamespace>
+    <ApplicationIcon>rozkladka.ico</ApplicationIcon>
+    <Product>Rozkladka</Product>
+    <Description>Автоматичне перемикання розкладки клавіатури</Description>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rozkladka.Core\Rozkladka.Core.csproj" />
