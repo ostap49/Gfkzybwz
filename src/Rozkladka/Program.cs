@@ -8,7 +8,7 @@ internal static class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        bool silent = args.Any(a => a.Equals("--tray", StringComparison.OrdinalIgnoreCase));
+        bool silent = Packaging.LaunchedAtStartup(args);
 
         using var mutex = new Mutex(true, @"Local\Rozkladka.SingleInstance", out bool isFirst);
         if (!isFirst)
@@ -29,11 +29,16 @@ internal static class Program
 
         try
         {
-            Log.Info($"Старт {Application.ProductVersion}, {Environment.OSVersion}, шлях {Environment.ProcessPath}");
+            Log.Info($"Старт {Application.ProductVersion}, {Environment.OSVersion}, шлях {Environment.ProcessPath}, MSIX: {Packaging.IsPackaged}");
 
             var settings = AppSettings.Load();
             bool firstRun = !File.Exists(AppSettings.FilePath);
-            if (firstRun) settings.Save();
+            if (firstRun)
+            {
+                settings.Save();
+                // Із Microsoft Store інсталятора немає — вмикаємо автозапуск при першому запуску.
+                if (Packaging.IsPackaged) Packaging.SetStartWithWindows(true);
+            }
 
             var checker = new WindowsSpellChecker();
             var engine = new SwitchEngine(settings, checker);

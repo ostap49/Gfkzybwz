@@ -1,5 +1,4 @@
 using System.Text.Json;
-using Microsoft.Win32;
 
 namespace Rozkladka;
 
@@ -23,7 +22,7 @@ internal sealed class AppSettings
         "KeePass", "KeePassXC", "1Password", "Bitwarden",
     };
 
-    public static string Folder => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Rozkladka");
+    public static string Folder => Packaging.DataFolder;
     public static string FilePath => Path.Combine(Folder, "settings.json");
 
     private static readonly JsonSerializerOptions Json = new() { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
@@ -46,22 +45,5 @@ internal sealed class AppSettings
     {
         Directory.CreateDirectory(Folder);
         File.WriteAllText(FilePath, JsonSerializer.Serialize(this, Json));
-    }
-
-    private const string RunKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
-
-    public static bool StartWithWindows
-    {
-        get
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(RunKey);
-            return key?.GetValue("Rozkladka") is string;
-        }
-        set
-        {
-            using var key = Registry.CurrentUser.CreateSubKey(RunKey);
-            if (value) key.SetValue("Rozkladka", $"\"{Environment.ProcessPath}\" --tray");
-            else key.DeleteValue("Rozkladka", false);
-        }
     }
 }

@@ -32,6 +32,23 @@ jobs:
           $version = ([xml](Get-Content Directory.Build.props)).Project.PropertyGroup.Version
           & $iscc "/DAppVersion=$version" installer\Rozkladka.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build MSIX for Microsoft Store
+        shell: pwsh
+        env:
+          STORE_IDENTITY_NAME: ${{ vars.STORE_IDENTITY_NAME }}
+          STORE_PUBLISHER: ${{ vars.STORE_PUBLISHER }}
+          STORE_PUBLISHER_DISPLAY_NAME: ${{ vars.STORE_PUBLISHER_DISPLAY_NAME }}
+        run: |
+          $version = ([xml](Get-Content Directory.Build.props)).Project.PropertyGroup.Version
+          $p = @{ Version = $version }
+          if ($env:STORE_IDENTITY_NAME) { $p.IdentityName = $env:STORE_IDENTITY_NAME }
+          if ($env:STORE_PUBLISHER) { $p.Publisher = $env:STORE_PUBLISHER }
+          if ($env:STORE_PUBLISHER_DISPLAY_NAME) { $p.PublisherDisplayName = $env:STORE_PUBLISHER_DISPLAY_NAME }
+          ./packaging/build-msix.ps1 @p
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Rozkladka-Store-msix
+          path: publish/Rozkladka-Store.msix
       - uses: actions/upload-artifact@v4
         with:
           name: Rozkladka-Setup

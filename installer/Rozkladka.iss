@@ -29,6 +29,7 @@ CloseApplications=no
 
 [Languages]
 Name: "uk"; MessagesFile: "compiler:Languages\Ukrainian.isl"
+Name: "en"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "autostart"; Description: "Запускати разом з Windows (рекомендовано)"
@@ -58,4 +59,12 @@ var
 begin
   Exec(ExpandConstant('{sys}\taskkill.exe'), '/IM Rozkladka.exe /F', '', SW_HIDE, ewWaitUntilTerminated, Code);
   Result := '';
+end;
+
+// Під час видалення — запитати, чи стерти налаштування й винятки.
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if (CurUninstallStep = usPostUninstall) and not UninstallSilent then
+    if MsgBox('Видалити також налаштування й список винятків Rozkladka?', mbConfirmation, MB_YESNO) = IDYES then
+      DelTree(ExpandConstant('{userappdata}\Rozkladka'), True, True, True);
 end;

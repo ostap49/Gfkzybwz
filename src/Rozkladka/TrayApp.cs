@@ -26,7 +26,7 @@ internal sealed class TrayApp : ApplicationContext
         _doubleShift = new ToolStripMenuItem("⇧⇧ — змінити розкладку слова", null, (_, _) => Toggle(() => _settings.DoubleShiftConvertsWord = !_settings.DoubleShiftConvertsWord));
         _sound = new ToolStripMenuItem("Звук при перемиканні", null, (_, _) => Toggle(() => _settings.Sound = !_settings.Sound));
         _exclude = new ToolStripMenuItem("Вимкнути в цій програмі", null, (_, _) => ToggleExclude());
-        _startup = new ToolStripMenuItem("Запускати разом з Windows", null, (_, _) => { AppSettings.StartWithWindows = !AppSettings.StartWithWindows; UpdateChecks(); });
+        _startup = new ToolStripMenuItem("Запускати разом з Windows", null, (_, _) => ToggleStartup());
 
         var menu = new ContextMenuStrip();
         menu.Items.AddRange(new ToolStripItem[]
@@ -126,7 +126,7 @@ internal sealed class TrayApp : ApplicationContext
         _auto.Checked = _settings.AutoSwitch;
         _doubleShift.Checked = _settings.DoubleShiftConvertsWord;
         _sound.Checked = _settings.Sound;
-        _startup.Checked = AppSettings.StartWithWindows;
+        _startup.Checked = Packaging.StartWithWindows;
         if (_lastExternalApp is { Length: > 0 } app)
         {
             bool excluded = _settings.ExcludedApps.Contains(app, StringComparer.OrdinalIgnoreCase);
@@ -139,6 +139,13 @@ internal sealed class TrayApp : ApplicationContext
             _exclude.Text = "Вимкнути в цій програмі";
             _exclude.Enabled = false;
         }
+    }
+
+    private void ToggleStartup()
+    {
+        var problem = Packaging.SetStartWithWindows(!Packaging.StartWithWindows);
+        if (problem is not null) MessageBox.Show(problem, "Rozkladka", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        UpdateChecks();
     }
 
     private void ToggleExclude()

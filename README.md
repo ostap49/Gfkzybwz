@@ -32,6 +32,12 @@ Rozkladka сама виправляє слово, набране не в тій 
 
 Налаштування: меню іконки → «Винятки й налаштування (файл)…» (`%AppData%\Rozkladka\settings.json`). Журнал помилок: `%AppData%\Rozkladka\rozkladka.log`.
 
+## Microsoft Store
+
+`packaging/build-msix.ps1` збирає `Rozkladka-Store.msix` (CI — артефакт `Rozkladka-Store-msix`). Store сам підписує пакет, тож сертифікат не потрібен. Автозапуск у пакеті — через `StartupTask`, налаштування — у LocalState пакета.
+
+Значення Identity з Partner Center задаються змінними репозиторію (Settings → Secrets and variables → Actions → Variables): `STORE_IDENTITY_NAME`, `STORE_PUBLISHER`, `STORE_PUBLISHER_DISPLAY_NAME`. Тексти для сторінки — `docs/store-listing.md`, політика конфіденційності — `docs/privacy.md`.
+
 ## Для розробників
 
 ```bash
