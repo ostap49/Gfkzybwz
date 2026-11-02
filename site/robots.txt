@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ostap49.github.io/Gfkzybwz/sitemap.xml

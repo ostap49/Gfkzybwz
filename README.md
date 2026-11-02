@@ -1,5 +1,7 @@
 # Rozkladka
 
+**Сайт:** https://ostap49.github.io/Gfkzybwz/
+
 Безкоштовний помічник набору для **Windows 10/11**, натхненний [Klavko](https://github.com/stepsergius/Klavko) для macOS (код Klavko не використовується — це окрема реалізація на C#/.NET).
 
 Rozkladka сама виправляє слово, набране не в тій розкладці: `ghbdsn` → `привіт`, `руддщ` → `hello`. Усе працює локально, текст нікуди не надсилається.

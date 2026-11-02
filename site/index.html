@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Автоматичне перемикання розкладки для Windows — Rozkladka (безкоштовно)</title>
+<meta name="description" content="Набрали «ghbdsn» замість «привіт»? Rozkladka сама виправляє слово й перемикає розкладку клавіатури в Windows 10 і 11. Українська, англійська та інші мови. Безкоштовно, без інтернету.">
+<link rel="canonical" href="https://ostap49.github.io/Gfkzybwz/">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0057B7">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="uk_UA">
+<meta property="og:site_name" content="Rozkladka">
+<meta property="og:title" content="Rozkladka — автоматичне перемикання розкладки для Windows">
+<meta property="og:description" content="ghbdsn → привіт. Програма сама виправляє слова, набрані не в тій розкладці. Безкоштовно, без інтернету.">
+<meta property="og:url" content="https://ostap49.github.io/Gfkzybwz/">
+<meta property="og:image" content="https://ostap49.github.io/Gfkzybwz/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Rozkladka",
+  "alternateName": "Розкладка",
+  "description": "Автоматичне перемикання розкладки клавіатури для Windows: виправляє слова, набрані не в тій розкладці (ghbdsn → привіт).",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Windows 10, Windows 11",
+  "inLanguage": ["uk", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "UAH" },
+  "downloadUrl": "https://github.com/ostap49/Gfkzybwz/releases/latest/download/Rozkladka-Setup.exe",
+  "url": "https://ostap49.github.io/Gfkzybwz/",
+  "image": "https://ostap49.github.io/Gfkzybwz/og.png"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Чи безкоштовна Rozkladka?", "acceptedAnswer": {"@type": "Answer", "text": "Так. Програма безкоштовна, без реклами, підписок і реєстрації."}},
+    {"@type": "Question", "name": "Чи безпечно, що програма бачить, що я набираю?", "acceptedAnswer": {"@type": "Answer", "text": "Rozkladka тримає в пам'яті лише поточне слово, нічого не записує й не з'єднується з інтернетом. Набраний текст не залишає ваш комп'ютер. Код програми доступний на GitHub — його можна перевірити."}},
+    {"@type": "Question", "name": "Як скасувати автоматичну заміну?", "acceptedAnswer": {"@type": "Answer", "text": "Натисніть Backspace одразу після заміни — слово повернеться таким, як ви його набрали. Якщо скасувати те саме слово двічі, програма більше не змінюватиме його."}},
+    {"@type": "Question", "name": "Які мови підтримуються?", "acceptedAnswer": {"@type": "Answer", "text": "Будь-які розкладки, увімкнені у Windows: українська, англійська, польська, німецька та інші. Слова перевіряються словниками Windows."}},
+    {"@type": "Question", "name": "Чим Rozkladka відрізняється від Punto Switcher?", "acceptedAnswer": {"@type": "Answer", "text": "Rozkladka створена з фокусом на українську мову, працює повністю офлайн, не має прив'язки до сервісів Яндекса, а її код доступний для перевірки на GitHub."}},
+    {"@type": "Question", "name": "Чи працює на Windows 11?", "acceptedAnswer": {"@type": "Answer", "text": "Так, на Windows 10 і Windows 11 (64-біт). Встановлення не потребує прав адміністратора."}}
+  ]
+}
+</script>
+
+<style>
+:root {
+  --bg: #f7f8fb; --surface: #ffffff; --text: #0f172a; --muted: #475569; --line: #e2e8f0;
+  --blue: #0057B7; --blue-ink: #004494; --yellow: #FFD700; --code-bg: #0b1220; --code-text: #e2e8f0;
+  --radius: 14px; --shadow: 0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220; --surface: #111a2e; --text: #e8edf6; --muted: #9aa8bf; --line: #1f2a40;
+    --blue: #3b82f6; --blue-ink: #93c5fd; --shadow: none; --code-bg: #050a14;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 17px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+a { color: var(--blue-ink); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+header.top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; color: var(--text); text-decoration: none; }
+.brand img { width: 32px; height: 32px; border-radius: 7px; }
+nav.top a { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: 15px; }
+nav.top a:hover { color: var(--text); }
+
+.hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding: 40px 0 64px; }
+.eyebrow { display: inline-block; font-size: 14px; font-weight: 600; color: var(--blue-ink); background: color-mix(in srgb, var(--blue) 12%, transparent); padding: 4px 12px; border-radius: 999px; }
+h1 { font-size: clamp(32px, 5vw, 50px); line-height: 1.12; margin: 16px 0 16px; letter-spacing: -0.02em; }
+.lead { font-size: 19px; color: var(--muted); margin: 0 0 28px; max-width: 34em; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 12px; font-weight: 600; text-decoration: none; font-size: 17px; }
+.btn-primary { background: var(--blue); color: #fff; box-shadow: 0 6px 18px color-mix(in srgb, var(--blue) 35%, transparent); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { color: var(--text); border: 1px solid var(--line); background: var(--surface); }
+.fine { font-size: 14px; color: var(--muted); margin-top: 14px; }
+
+.demo { border: 1px solid var(--line); background: var(--code-bg); color: var(--code-text); border-radius: var(--radius); padding: 22px 22px 26px; box-shadow: var(--shadow); font-family: Consolas, "Cascadia Mono", ui-monospace, monospace; }
+.demo .bar { display: flex; gap: 6px; margin-bottom: 18px; }
+.demo .bar i { width: 11px; height: 11px; border-radius: 50%; background: #334155; display: block; }
+.demo .line { font-size: 22px; min-height: 1.6em; white-space: nowrap; overflow: hidden; }
+.demo .caret { display: inline-block; width: 2px; height: 1.1em; background: var(--yellow); vertical-align: -0.15em; animation: blink 1s steps(1) infinite; }
+.demo .wrong { color: #94a3b8; }
+.demo .fixed { color: #fff; background: color-mix(in srgb, var(--yellow) 22%, transparent); border-radius: 4px; }
+.demo .status { margin-top: 16px; font-size: 13px; color: #94a3b8; display: flex; align-items: center; gap: 8px; }
+.demo .flag { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 20px; border-radius: 4px; font-size: 11px; font-weight: 700; color: #fff; background: #334155; }
+.demo .flag.ua { background: linear-gradient(#0057B7 60%, #FFD700 60%); }
+@keyframes blink { 50% { opacity: 0; } }
+
+section { padding: 56px 0; }
+h2 { font-size: clamp(26px, 3.4vw, 34px); line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
+.sub { color: var(--muted); margin: 0 0 32px; max-width: 40em; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+.card h3 { margin: 0 0 6px; font-size: 18px; }
+.card p { margin: 0; color: var(--muted); font-size: 16px; }
+.card .ico { font-size: 24px; margin-bottom: 8px; display: block; }
+
+.steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 0; list-style: none; margin: 0; }
+.steps li { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 22px 70px; position: relative; }
+.steps li::before { content: counter(s); position: absolute; left: 22px; top: 20px; width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: #fff; font-weight: 700; display: grid; place-items: center; }
+
+table.keys { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+table.keys th, table.keys td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.keys tr:last-child td { border-bottom: 0; }
+table.keys th { font-size: 14px; color: var(--muted); font-weight: 600; }
+kbd { font-family: inherit; font-size: 14px; padding: 2px 8px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; background: var(--bg); white-space: nowrap; }
+
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; }
+summary { cursor: pointer; font-weight: 600; }
+details p { color: var(--muted); margin: 10px 0 0; }
+
+.final { text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 48px 20px; }
+.final .cta { justify-content: center; }
+footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+footer a { color: var(--muted); }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; gap: 32px; padding-top: 16px; }
+  .grid, .steps { grid-template-columns: 1fr; }
+  nav.top { display: none; }
+  table.keys th, table.keys td { padding: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .demo .caret { animation: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./"><img src="icon-150.png" alt="" width="32" height="32">Rozkladka</a>
+    <nav class="top" aria-label="Розділи">
+      <a href="#features">Можливості</a>
+      <a href="#how">Як працює</a>
+      <a href="#faq">Питання</a>
+      <a href="https://github.com/ostap49/Gfkzybwz">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="h1">
+      <div>
+        <span class="eyebrow">Для Windows 10 і 11 · безкоштовно</span>
+        <h1 id="h1">Автоматичне перемикання розкладки клавіатури</h1>
+        <p class="lead">Набрали «ghbdsn» замість «привіт»? Rozkladka сама помітить, що слово набране не в тій розкладці, виправить його й перемкне мову. Ви просто пишете далі.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://github.com/ostap49/Gfkzybwz/releases/latest/download/Rozkladka-Setup.exe" data-event="download_setup">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 19h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Завантажити для Windows
+          </a>
+          <a class="btn btn-ghost" href="#how">Як це працює</a>
+        </div>
+        <p class="fine">Встановлення без прав адміністратора · працює без інтернету · ~70 МБ</p>
+      </div>
+
+      <div class="demo" aria-label="Приклад: ghbdsn перетворюється на привіт">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="line" id="demo-line"><span class="wrong">ghbdsn</span> → <span class="fixed">привіт</span></div>
+        <div class="status"><span class="flag ua" id="demo-flag">UA</span><span id="demo-status">Розкладка перемкнулася автоматично</span></div>
+      </div>
+    </section>
+
+    <section id="features" aria-labelledby="features-h">
+      <h2 id="features-h">Що вміє Rozkladka</h2>
+      <p class="sub">Програма-перемикач розкладки, яка не заважає: виправляє лише очевидні помилки й ніколи не надсилає ваш текст.</p>
+      <div class="grid">
+        <div class="card"><span class="ico" aria-hidden="true">⚡</span><h3>Автоматично</h3><p>Слово, набране не в тій розкладці, виправляється після пробілу, Enter чи Tab: <code>ghbdsn?</code> → <code>привіт,</code></p></div>
+        <div class="card"><span class="ico" aria-hidden="true">↩️</span><h3>Скасування одним Backspace</h3><p>Не хотіли заміни — натисніть Backspace. Слово, яке ви двічі повернули, програма запам'ятає й більше не чіпатиме.</p></div>
+        <div class="card"><span class="ico" aria-hidden="true">⇧</span><h3>Вручну, коли треба</h3><p>Двічі Shift — змінити розкладку поточного слова. Pause — перекласти розкладку виділеного тексту.</p></div>
+        <div class="card"><span class="ico" aria-hidden="true">📖</span><h3>Перевірка словником</h3><p>Слова перевіряються словниками Windows, тож справжні слова, імена й одруки залишаються як є.</p></div>
+        <div class="card"><span class="ico" aria-hidden="true">🛡️</span><h3>Там, де не треба, — вимкнено</h3><p>Термінали, редактори коду й менеджери паролів виключені одразу. Будь-яку програму можна вимкнути з меню.</p></div>
+        <div class="card"><span class="ico" aria-hidden="true">🔒</span><h3>Приватно й офлайн</h3><p>Без облікових записів, реклами й аналітики. Набраний текст не залишає комп'ютер, а код доступний на GitHub.</p></div>
+      </div>
+    </section>
+
+    <section id="how" aria-labelledby="how-h">
+      <h2 id="how-h">Як почати</h2>
+      <p class="sub">Три кроки — і про перемикання розкладки можна забути.</p>
+      <ol class="steps">
+        <li><strong>Завантажте інсталятор</strong><br><span style="color:var(--muted)">Якщо Windows покаже попередження SmartScreen, натисніть «Докладніше» → «Виконати».</span></li>
+        <li><strong>Встановіть</strong><br><span style="color:var(--muted)">Програма додасться в автозапуск і з'явиться в треї біля годинника як UA / EN.</span></li>
+        <li><strong>Пишіть як звикли</strong><br><span style="color:var(--muted)">Помилилися з розкладкою — Rozkladka виправить слово сама.</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="keys-h">
+      <h2 id="keys-h">Гарячі клавіші</h2>
+      <p class="sub">Працюють у будь-якій програмі.</p>
+      <table class="keys">
+        <thead><tr><th scope="col">Дія</th><th scope="col">Клавіші</th></tr></thead>
+        <tbody>
+          <tr><td>Змінити розкладку поточного або щойно набраного слова</td><td><kbd>Shift</kbd> <kbd>Shift</kbd> (двічі)</td></tr>
+          <tr><td>Змінити розкладку виділеного тексту</td><td><kbd>Pause</kbd></td></tr>
+          <tr><td>Скасувати автоматичну заміну</td><td><kbd>Backspace</kbd> одразу після неї</td></tr>
+          <tr><td>Увімкнути / вимкнути автоперемикання</td><td>клік по іконці в треї</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-h">
+      <h2 id="faq-h">Питання й відповіді</h2>
+      <details open><summary>Чи безкоштовна Rozkladka?</summary><p>Так. Програма безкоштовна, без реклами, підписок і реєстрації.</p></details>
+      <details><summary>Чи безпечно, що програма бачить, що я набираю?</summary><p>Rozkladka тримає в пам'яті лише поточне слово, нічого не записує й не з'єднується з інтернетом. Набраний текст не залишає ваш комп'ютер. Код доступний на <a href="https://github.com/ostap49/Gfkzybwz">GitHub</a> — його можна перевірити. Деталі — у <a href="privacy.html">політиці конфіденційності</a>.</p></details>
+      <details><summary>Як скасувати автоматичну заміну?</summary><p>Натисніть Backspace одразу після заміни — слово повернеться таким, як ви його набрали. Якщо скасувати те саме слово двічі, програма більше не змінюватиме його.</p></details>
+      <details><summary>Які мови підтримуються?</summary><p>Будь-які розкладки, увімкнені у Windows: українська, англійська, польська, німецька та інші. Слова перевіряються словниками Windows. Якщо словника для мови немає, програма виправляє лише очевидні випадки.</p></details>
+      <details><summary>Чим Rozkladka відрізняється від Punto Switcher?</summary><p>Rozkladka створена з фокусом на українську мову, працює повністю офлайн, не прив'язана до сервісів Яндекса, а її код доступний для перевірки на GitHub.</p></details>
+      <details><summary>Чи працює на Windows 11?</summary><p>Так, на Windows 10 і Windows 11 (64-біт). Встановлення не потребує прав адміністратора.</p></details>
+      <details><summary>Антивірус або SmartScreen попереджає — чому?</summary><p>Програма поки не має платного цифрового підпису, а перехоплення клавіатури антивіруси іноді вважають підозрілим. Встановлюйте Rozkladka лише з цієї сторінки або з GitHub.</p></details>
+    </section>
+
+    <section class="final" aria-labelledby="final-h">
+      <h2 id="final-h">Більше ніяких «ghbdsn»</h2>
+      <p class="sub" style="margin:0 auto 24px">Завантажте Rozkladka і пишіть, не дивлячись на індикатор мови.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/ostap49/Gfkzybwz/releases/latest/download/Rozkladka-Setup.exe" data-event="download_setup_bottom">Завантажити безкоштовно</a>
+        <a class="btn btn-ghost" href="https://github.com/ostap49/Gfkzybwz/releases/latest/download/Rozkladka.exe" data-event="download_portable">Портативна версія</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Rozkladka</span>
+    <span><a href="privacy.html">Політика конфіденційності</a> · <a href="https://github.com/ostap49/Gfkzybwz">GitHub</a> · <a href="https://github.com/ostap49/Gfkzybwz/issues">Повідомити про проблему</a></span>
+  </footer>
+</div>
+
+<script>
+// Демо: «друкуємо» слово в неправильній розкладці, потім показуємо виправлення.
+(function () {
+  var line = document.getElementById('demo-line');
+  var flag = document.getElementById('demo-flag');
+  var status = document.getElementById('demo-status');
+  if (!line || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var pairs = [['ghbdsn', 'привіт', 'UA'], ['руддщ', 'hello', 'EN'], ['rkfdsfnehf', 'клавіатура', 'UA'], ['lzre.', 'дякую', 'UA']];
+  var i = 0;
+  function esc(s) { return s.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
+  function setFlag(code) { flag.textContent = code; flag.className = 'flag' + (code === 'UA' ? ' ua' : ''); }
+  function play() {
+    var p = pairs[i++ % pairs.length], n = 0;
+    setFlag(p[2] === 'UA' ? 'EN' : 'UA');
+    status.textContent = 'Набираєте…';
+    (function type() {
+      line.innerHTML = '<span class="wrong">' + esc(p[0].slice(0, n)) + '</span><span class="caret"></span>';
+      if (n++ < p[0].length) return setTimeout(type, 120);
+      setTimeout(function () {
+        line.innerHTML = '<span class="fixed">' + esc(p[1]) + '</span> <span class="caret"></span>';
+        setFlag(p[2]);
+        status.textContent = 'Виправлено й перемкнуто на ' + p[2];
+        setTimeout(play, 2200);
+      }, 450);
+    })();
+  }
+  setTimeout(play, 1200);
+})();
+</script>
+</body>
+</html>
